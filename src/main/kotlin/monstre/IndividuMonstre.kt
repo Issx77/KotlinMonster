@@ -11,7 +11,7 @@ class IndividuMonstre(
     val id: Int,
     var nom: String,
     val espece: EspeceMonstre,
-    val entraineur: Entraineur?,
+    var entraineur: Entraineur?,
     expInit: Double
 ) {
 

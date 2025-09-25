@@ -2,6 +2,7 @@ package org.example
 
 
 import org.example.dresseur.Entraineur
+import org.example.item.MonsterKube
 import org.example.monde.Zone
 import org.example.monstre.EspeceMonstre
 import org.example.monstre.IndividuMonstre
@@ -130,6 +131,7 @@ val route2 = Zone(
     // zoneSuivante et zonePrecedente non définies ici
 )
 
+val kube1= MonsterKube(1,"Kube","ce Kube permet capturer des Monstre",50.0)
 
 fun main() {
 
@@ -141,6 +143,9 @@ fun main() {
     val monstre1 = IndividuMonstre(101, "Flamkip", especeFlamkip, joueur, 1500.0)
     val monstre2 = IndividuMonstre(102, "Aquamy", especeAquamy, joueur, 1500.0)
     val monstre3 = IndividuMonstre(103, "Laoumi", especeLaoumi, joueur, 1500.0)
+
+
+    //kube1.utiliser(cible = monstre1)
 
     // Affichage des infos avec mise en couleur
     println(changeCouleur("=== Infos Monstres après création ===", "cyan"))
