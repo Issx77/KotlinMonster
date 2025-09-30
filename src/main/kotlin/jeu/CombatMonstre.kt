@@ -46,7 +46,7 @@ fun actionAdversaire(){
     }
 }
 fun actionJoueur(): Boolean{
-    if (gameOver()==true){
+    if (gameOver()){
         return false
     }
     else{
@@ -61,9 +61,9 @@ fun actionJoueur(): Boolean{
         }
         if (choixAction.toInt()==1){
             monstreJoueur.attaquer(monstreSauvage)
-            return true
+            //return true
         }
-        else if (choixAction.toInt()==2){
+        else if (choixAction.toInt()==2){//choix objet
             for ((index,objet) in this.joueur.sacItems.withIndex()){
                 println("$index => ${objet}")
             }
@@ -75,13 +75,85 @@ fun actionJoueur(): Boolean{
             val obj= joueur.sacItems[choixObjet.toInt()]
             if(obj is Utilisable){
                 val result= obj.utiliser(monstreSauvage)
-                if (result==true){
+                if (result){
                     return false
                 }
             }else{println("Objet non utilisable")}
 
         }
+        else{//changer de monstre
+            for ((index,monster) in this.joueur.equipeMonstre.withIndex()){
+                println("$index => ${monster}")
+            }
+            var choixMonster = readln()
+            while ( choixMonster.toInt() !in (0..joueur.equipeMonstre.size-1)){
+                println("Veuillez saisir un monstre encore en vie")
+                choixMonster = readln()
+            }
+           val autreMonstre =joueur.equipeMonstre[choixMonster.toInt()]
+            if (autreMonstre.pv <=0  ){
+                println("Impossible ! Ce monstre est KO")
+            }
+            else{
+                println("${autreMonstre} remplace ${monstreJoueur}")
+                monstreJoueur=autreMonstre
+            }
+        }
+        return true
 
     }
 }
+fun afficherCombat(){
+    println("============== Début Du Round : $round ==============/n"+
+            "            Niveau : ${monstreSauvage.niveau}/n"+
+            "            Pv: ${monstreSauvage.pv}/${monstreSauvage.pvMax}/n"+
+            monstreSauvage.espece.afficheArt(true)+
+            monstreJoueur.espece.afficheArt(false)+
+            "           Niveau : ${monstreJoueur.niveau}/n" +
+            "           Pv: ${monstreJoueur.pv}/${monstreJoueur.pvMax}/n",
+        )
+
+
+}
+fun jouer(){
+   val joueurPlusRapide = monstreJoueur.vitesse > monstreSauvage.vitesse
+    afficherCombat()
+    if (joueurPlusRapide==true){
+        val continuer=actionJoueur()
+        if (continuer==false){
+            return
+        }
+        actionAdversaire()
+    }
+    else{
+        actionAdversaire()
+        if (gameOver()==false){
+            val continuer=actionJoueur()
+            if (continuer==false){
+                return
+            }
+
+        }
+    }
+
+}
+
+fun lanceCombat(){/**
+     * Lance le combat et gère les rounds jusqu'à la victoire ou la défaite.
+     *
+     * Affiche un message de fin si le joueur perd et restaure les PV
+     * de tous ses monstres.
+     */
+    fun lanceCombat() {
+        while (!gameOver() && !joueurGagne()) {
+            this.jouer()
+            println("======== Fin du Round : $round ========")
+            round++
+        }
+        if (gameOver()) {
+            joueur.equipeMonstre.forEach { it.pv = it.pvMax }
+            println("Game Over !")
+        }
+    }
+    }
 }
