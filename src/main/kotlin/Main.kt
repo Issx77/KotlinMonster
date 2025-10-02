@@ -3,13 +3,24 @@ package org.example
 
 import org.example.dresseur.Entraineur
 import org.example.item.MonsterKube
+import org.example.jeu.Partie
 import org.example.monde.Zone
 import org.example.monstre.EspeceMonstre
 import org.example.monstre.IndividuMonstre
 
 var joueur = Entraineur(1, "Sacha", 100)
 var rival = Entraineur(2,"Regis",200)
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
+
+fun nouvellePartie(): Partie {
+    println(" Bienvenue dans KotlinMonsters !")
+    print("Entrez le nom de votre dresseur : ")
+    val nomJoueur = readLine()?.trim()
+    if (!nomJoueur.isNullOrEmpty()) {
+        joueur.nom = nomJoueur
+    }
+    val partie = Partie(1, joueur, route1)
+    return partie
+}//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 val especeFlamkip = EspeceMonstre(
     id = 4,
@@ -130,37 +141,25 @@ val route2 = Zone(
     especesMonstres = mutableListOf(especeAquamy)
     // zoneSuivante et zonePrecedente non définies ici
 )
+// Création de trois monstres avec suffisamment d'exp pour level-up
+val monstre1 = IndividuMonstre(101, "Flamkip", especeFlamkip, joueur, 1500.0)
+val monstre2 = IndividuMonstre(102, "Aquamy", especeAquamy, joueur, 1500.0)
+val monstre3 = IndividuMonstre(103, "Laoumi", especeLaoumi, joueur, 1500.0)
+
 
 val kube1= MonsterKube(1,"Kube","ce Kube permet capturer des Monstre",50.0)
 
 fun main() {
 
+
     route1.zoneSuivante = route2
     route2.zonePrecedente = route1
+    joueur.sacItems.add(kube1)
 
 
-    // Création de trois monstres avec suffisamment d'exp pour level-up
-    val monstre1 = IndividuMonstre(101, "Flamkip", especeFlamkip, joueur, 1500.0)
-    val monstre2 = IndividuMonstre(102, "Aquamy", especeAquamy, joueur, 1500.0)
-    val monstre3 = IndividuMonstre(103, "Laoumi", especeLaoumi, joueur, 1500.0)
-
-
-    //kube1.utiliser(cible = monstre1)
-
-    // Affichage des infos avec mise en couleur
-    println(changeCouleur("=== Infos Monstres après création ===", "cyan"))
-    println(changeCouleur("${monstre1.nom} est niveau ${monstre1.niveau} avec ${monstre1.exp} exp et ${monstre1.pv}/${monstre1.pvMax} PV", "jaune"))
-    println(changeCouleur("${monstre2.nom} est niveau ${monstre2.niveau} avec ${monstre2.exp} exp et ${monstre2.pv}/${monstre2.pvMax} PV", "bleu"))
-    println(changeCouleur("${monstre3.nom} est niveau ${monstre3.niveau} avec ${monstre3.exp} exp et ${monstre3.pv}/${monstre3.pvMax} PV", "vert"))
-    println(changeCouleur("\n=== Test du renommage ===", "magenta"))
-    println("Nom actuel du monstre1 : ${monstre1.nom}")
-
-    monstre1.renommer()
-
-    println("Nom final du monstre1 : ${monstre1.nom}")
-    println(changeCouleur("\n=== Test de l'afficheDetail ===", "cyan"))
-    monstre1.afficheDetail()
-
+    val partie = nouvellePartie()
+    partie.choixStarter()
+    partie.jouer()
 }
 
 

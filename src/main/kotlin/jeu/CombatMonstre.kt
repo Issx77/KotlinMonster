@@ -13,8 +13,8 @@ class CombatMonstre(
     var round: Int = 1
 
 fun gameOver(): Boolean{
-    for (monstre in joueur.equipeMonstre){
-        if (monstre.pv>0){
+    for (monstre in joueur.equipeMonstre) {
+        if (monstre.pv > 0) {
             return false
         }
     }
@@ -104,13 +104,13 @@ fun actionJoueur(): Boolean{
     }
 }
 fun afficherCombat(){
-    println("============== Début Du Round : $round ==============/n"+
-            "            Niveau : ${monstreSauvage.niveau}/n"+
-            "            Pv: ${monstreSauvage.pv}/${monstreSauvage.pvMax}/n"+
+    println("============== Début Du Round : $round ==============\n"+
+            "            Niveau : ${monstreSauvage.niveau}\n"+
+            "            Pv: ${monstreSauvage.pv}/${monstreSauvage.pvMax}\n"+
             monstreSauvage.espece.afficheArt(true)+
             monstreJoueur.espece.afficheArt(false)+
-            "           Niveau : ${monstreJoueur.niveau}/n" +
-            "           Pv: ${monstreJoueur.pv}/${monstreJoueur.pvMax}/n",
+            "           Niveau : ${monstreJoueur.niveau}\n" +
+            "           Pv: ${monstreJoueur.pv}/${monstreJoueur.pvMax}\n",
         )
 
 
@@ -136,15 +136,15 @@ fun jouer(){
         }
     }
 
-}
+}/**
+    * Lance le combat et gère les rounds jusqu'à la victoire ou la défaite.
+    *
+    * Affiche un message de fin si le joueur perd et restaure les PV
+    * de tous ses monstres.
+    */
+fun lanceCombat(){
 
-fun lanceCombat(){/**
-     * Lance le combat et gère les rounds jusqu'à la victoire ou la défaite.
-     *
-     * Affiche un message de fin si le joueur perd et restaure les PV
-     * de tous ses monstres.
-     */
-    fun lanceCombat() {
+
         while (!gameOver() && !joueurGagne()) {
             this.jouer()
             println("======== Fin du Round : $round ========")
@@ -155,5 +155,5 @@ fun lanceCombat(){/**
             println("Game Over !")
         }
     }
-    }
+
 }
