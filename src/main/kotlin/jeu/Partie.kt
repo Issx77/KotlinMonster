@@ -19,10 +19,10 @@ class Partie(var id: Int, var joueur: Entraineur,var zone: Zone ) {
                 "\n-> 1 Flamkip" +
                 "\n-> 2 Aquamy" +
                 "\n-> 3 Laoumi")
-        var choixpoke = readln()
+
         do {
 
-            choixpoke = readln()
+            val choixpoke = readln()
             var starter =monstre1
             if (choixpoke.toInt()==1){
                 starter=monstre1
@@ -38,7 +38,7 @@ class Partie(var id: Int, var joueur: Entraineur,var zone: Zone ) {
             starter.renommer()
             joueur.equipeMonstre.add(starter)
             starter.entraineur=joueur
-        }while ( choixpoke.toInt() !in (1..3))
+        }while ( choixpoke.toInt() !in (1..4))
     }
     fun modifierOrdreEquipe() {
         if (joueur.equipeMonstre.size < 2) {

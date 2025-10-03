@@ -154,7 +154,8 @@ fun main() {
 
     route1.zoneSuivante = route2
     route2.zonePrecedente = route1
-    joueur.sacItems.add(kube1)
+    joueur.sacItems.add(
+        kube1)
 
 
     val partie = nouvellePartie()

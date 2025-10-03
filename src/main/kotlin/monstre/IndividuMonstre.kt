@@ -92,9 +92,9 @@ class IndividuMonstre(
 
         if (!nouveauNom.isNullOrBlank()) {
             nom = nouveauNom
-            println("✅ Le monstre a été renommé en ${this.nom}")
+            println("\nLe monstre a été renommé en ${this.nom}")
         } else {
-            println("ℹ️ Nom inchangé, ${nom} conserve son nom.")
+            println("\nNom inchangé, ${nom} conserve son nom.")
         }
     }
     fun afficheDetail() {
