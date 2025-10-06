@@ -65,7 +65,7 @@ fun actionJoueur(): Boolean{
         }
         else if (choixAction.toInt()==2){//choix objet
             for ((index,objet) in this.joueur.sacItems.withIndex()){
-                println("$index => ${objet}")
+                println("$index => ${objet.nom}")
             }
             var choixObjet = readln().toString()
             while ( choixObjet.toInt() !in (0..joueur.sacItems.size)){
@@ -83,7 +83,7 @@ fun actionJoueur(): Boolean{
         }
         else{//changer de monstre
             for ((index,monster) in this.joueur.equipeMonstre.withIndex()){
-                println("$index => ${monster}")
+                println("$index => ${monster.nom}")
             }
             var choixMonster = readln()
             while ( choixMonster.toInt() !in (0..joueur.equipeMonstre.size)){
@@ -116,6 +116,13 @@ fun afficherCombat(){
 
 }
 fun jouer(){
+    if(monstreJoueur.pv == 0 && gameOver()==false){
+       for (unMonstre in joueur.equipeMonstre){
+           if (unMonstre.pv>0){
+               monstreJoueur=unMonstre
+           }
+       }
+    }
    val joueurPlusRapide = monstreJoueur.vitesse > monstreSauvage.vitesse
     afficherCombat()
     if (joueurPlusRapide==true){
